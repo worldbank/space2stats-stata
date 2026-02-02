@@ -15,7 +15,7 @@ program define query_s2s
     * Validate dataset combinations
     local has_monthly = 0
     local has_annual = 0
-    local has_csm = 0
+    local has_len = 0
     foreach dataset of local datasets {
         if "`dataset'" == "ntl_viirs_bm_monthly" {
             local has_monthly = 1
@@ -23,13 +23,13 @@ program define query_s2s
         if "`dataset'" == "ntl_viirs_bm_annual" {
             local has_annual = 1
         }
-        if "`dataset'" == "ntl_viirs_csm_annual" {
-            local has_csm = 1
+        if "`dataset'" == "ntl_viirs_len_annual" {
+            local has_len = 1
         }
     }
     
-    if `has_monthly' == 1 & (`has_annual' == 1 | `has_csm' == 1) {
-        di as error "ntl_viirs_bm_monthly cannot be combined with ntl_viirs_bm_annual or ntl_viirs_csm_annual"
+    if `has_monthly' == 1 & (`has_annual' == 1 | `has_len' == 1) {
+        di as error "ntl_viirs_bm_monthly cannot be combined with ntl_viirs_bm_annual or ntl_viirs_len_annual"
         di as error "These datasets have different temporal structures (monthly vs annual)"
         error 198
     }
@@ -53,7 +53,7 @@ program define query_s2s
     if `adm_level' == 1 {
         local need_adm1_mapping = 0
         foreach dataset of local dataset_list {
-            if inlist("`dataset'", "ntl_viirs_csm_annual", "flood_exposure", "population_2020", "urbanization") {
+            if inlist("`dataset'", "ntl_viirs_len_annual", "flood_exposure", "population_2020", "urbanization") {
                 local need_adm1_mapping = 1
             }
         }
@@ -85,9 +85,9 @@ program define query_s2s
         
         * Validate dataset name
         if !inlist("`dataset'", "ntl_viirs_bm_annual", "ntl_viirs_bm_monthly", ///
-            "ntl_viirs_csm_annual", "flood_exposure", "population_2020", "urbanization") {
+            "ntl_viirs_len_annual", "flood_exposure", "population_2020", "urbanization") {
             di as error "Invalid dataset: `dataset'"
-            di as error "Valid datasets: ntl_viirs_bm_annual, ntl_viirs_bm_monthly, ntl_viirs_csm_annual, flood_exposure, population_2020, urbanization"
+            di as error "Valid datasets: ntl_viirs_bm_annual, ntl_viirs_bm_monthly, ntl_viirs_len_annual, flood_exposure, population_2020, urbanization"
             error 198
         }
         
@@ -396,9 +396,9 @@ program define query_s2s
             }
         }
         
-        else if "`dataset'" == "ntl_viirs_csm_annual" {
-            di as text "Loading dataset: ntl_viirs_csm_annual..."
-            tempfile temp_csm
+        else if "`dataset'" == "ntl_viirs_len_annual" {
+            di as text "Loading dataset: ntl_viirs_len_annual..."
+            tempfile temp_len
             qui import delimited "https://datacatalogfiles.worldbank.org/ddh-published/0066820/DR0095356/adm2_VIIRS.csv", clear bindquote(strict)
             
             * Filter by iso3 if specified
@@ -465,8 +465,8 @@ program define query_s2s
                 qui duplicates drop iso3 year, force
             }
             
-            * Save the CSM data
-            qui save `temp_csm'
+            * Save the LENs data
+            qui save `temp_len'
             
             * Merge with master if it exists, otherwise make this the master
             if `have_master' == 0 {
@@ -479,17 +479,17 @@ program define query_s2s
                 * Determine merge strategy based on what's in master
                 if `master_has_year' == 1 {
                     * Both have year - use 1:1 merge
-                    qui merge 1:1 `base_merge_keys' year using `temp_csm', nogen
+                    qui merge 1:1 `base_merge_keys' year using `temp_len', nogen
                 }
                 else if `master_has_date' == 1 {
                     * Master has date, incoming has year - extract year from date first
                     qui gen year = year(date(date, "YMD"))
-                    qui merge m:1 `base_merge_keys' year using `temp_csm', nogen
+                    qui merge m:1 `base_merge_keys' year using `temp_len', nogen
                     local master_has_year = 1
                 }
                 else {
                     * Master has no temporal component - use 1:m merge
-                    qui merge 1:m `base_merge_keys' using `temp_csm', nogen
+                    qui merge 1:m `base_merge_keys' using `temp_len', nogen
                     local master_has_year = 1
                 }
                 qui save `master_data', replace
@@ -681,15 +681,15 @@ program define query_s2s
     describe, short
     
     * Add variable labels based on datasets loaded
-    local has_csm = 0
+    local has_len = 0
     local has_bm = 0
     local has_urbanization = 0
     local has_flood = 0
     local has_population = 0
     
     foreach dataset of local dataset_list {
-        if "`dataset'" == "ntl_viirs_csm_annual" {
-            local has_csm = 1
+        if "`dataset'" == "ntl_viirs_len_annual" {
+            local has_len = 1
         }
         if "`dataset'" == "ntl_viirs_bm_annual" | "`dataset'" == "ntl_viirs_bm_monthly" {
             local has_bm = 1
@@ -705,8 +705,8 @@ program define query_s2s
         }
     }
     
-    if `has_csm' == 1 {
-        capture label var sum_viirs_ntl "Dataset: NTL VIIRS (Colorado School of Mines)"
+    if `has_len' == 1 {
+        capture label var sum_viirs_ntl "Dataset: NTL VIIRS (World Bank, Light Every Night)"
     }
     
     if `has_bm' == 1 {

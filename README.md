@@ -1,8 +1,6 @@
-# space2stats-stata: Query Space2Stats Datasets at ADM Levels
+# space2stats-stata: Query Space2Stats Datasets at ADM 0-2 Levels
 
-A Stata package to easily load, filter, and merge datasets from the World Bank's [Space2Stats](https://worldbank.github.io/DECAT_Space2Stats/readme.html) initiative at the ADM 2, 1, and 0 level. 
-
-The packages relies on data from two Space2Stat Development Data Hub (DDH) repositories:
+A Stata package to easily load, filter, and merge datasets from the World Bank's [Space2Stats](https://worldbank.github.io/DECAT_Space2Stats/readme.html) initiative at the ADM 2, 1, and 0 level. The packages queries data from two Space2Stat Development Data Hub (DDH) repositories:
 
 * The main [Space2Stats Database](https://datacatalog.worldbank.org/int/search/dataset/0066820/Space2Stats-Database), to query data on:
     - Population Demographics, 2020 (WorldPop)
@@ -42,12 +40,12 @@ query_s2s, datasets(string) [iso3(string) date_start(string) date_end(string) ad
 ### Required Parameters
 
 - **`datasets(string)`**: One or more datasets to load (space-separated)
-  - `ntl_viirs_bm_annual` - Night-time lights (VIIRS Black Marble), annual
-  - `ntl_viirs_bm_monthly` - Night-time lights (VIIRS Black Marble), monthly
-  - `ntl_viirs_csm_annual` - Night-time lights (VIIRS Colorado School of Mines), annual
-  - `flood_exposure` - Flood exposure data (Fathom v3 and WorldPop)
-  - `population_2020` - Population data for 2020 (WorldPop)
-  - `urbanization` - Urbanization data (GHS-SMOD)
+  - `ntl_viirs_bm_annual` - Night-time lights (VIIRS, [NASA Black Marble](https://blackmarble.gsfc.nasa.gov/)), annual
+  - `ntl_viirs_bm_monthly` - Night-time lights (VIIRS, [NASA Black Marble](https://blackmarble.gsfc.nasa.gov/)), monthly
+  - `ntl_viirs_len_annual` - Night-time lights (VIIRS, [World Bank Light Every Night](https://worldbank.github.io/OpenNightLights/wb-light-every-night-readme.html)), annual
+  - `flood_exposure` - Flood exposure data ([Fathom v3](https://www.fathom.global/newsroom/fathom-launches-global-flood-map/) and [WorldPop](https://www.worldpop.org/))
+  - `population_2020` - Population data for 2020 ([WorldPop](https://www.worldpop.org/))
+  - `urbanization` - Urbanization data ([GHS-SMOD](https://human-settlement.emergency.copernicus.eu/ghs_smod2023.php))
 
 ### Optional Parameters
 
@@ -73,7 +71,7 @@ query_s2s, datasets(string) [iso3(string) date_start(string) date_end(string) ad
 ## Important Notes
 
 ### Dataset Compatibility
-- **Cannot combine** `ntl_viirs_bm_monthly` with `ntl_viirs_bm_annual` or `ntl_viirs_csm_annual` due to different temporal structures
+- **Cannot combine** `ntl_viirs_bm_monthly` with `ntl_viirs_bm_annual` or `ntl_viirs_len_annual` due to different temporal structures
 - All other dataset combinations are supported
 
 ### Date Filtering
@@ -114,7 +112,7 @@ query_s2s, datasets(ntl_viirs_bm_annual flood_exposure) iso3(USA MEX CAN) adm_le
 
 ### Example 7: Load Multiple NTL Datasets (Annual Only)
 ```stata
-query_s2s, datasets(ntl_viirs_bm_annual ntl_viirs_csm_annual) iso3(BRA) date_start(2015) date_end(2023)
+query_s2s, datasets(ntl_viirs_bm_annual ntl_viirs_len_annual) iso3(BRA) date_start(2015) date_end(2023)
 ```
 
 ### Example 8: Load All Static Datasets for a Region
@@ -144,16 +142,6 @@ The function loads the requested datasets into Stata's memory with:
   - Date range (if specified)
   - Number of observations
   - List of variables
-
-## Data Sources
-
-All data is loaded directly from the World Bank Data Catalog:
-
-- **Night-time Lights (Black Marble)**: NASA VIIRS Black Marble product
-- **Night-time Lights (CSM)**: Colorado School of Mines VIIRS product
-- **Flood Exposure**: Fathom v3 flood maps with WorldPop population
-- **Population**: WorldPop 2020 constrained population estimates
-- **Urbanization**: Global Human Settlement Layer - Settlement Model (GHS-SMOD)
 
 ## Technical Details
 

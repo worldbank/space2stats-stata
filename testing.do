@@ -62,9 +62,31 @@ collapse (sum) ghs_*, by(iso3 adm1cd_c)
 
 If adm = 0, the same as for adm = 1, but in collapse should be: by(iso3 nam_0) 
 
-label sum_viirs_ntl "NTL: VIIRS Colorado School of Mines"
+Make the following changes:
 
-	
+1. At the very end of the code, add this:
+
+label var sum_viirs_ntl "Dataset: NTL VIIRS (Colorado School of Mines)"
+
+foreach v of varlist ntl_* {
+    label var `v' "Dataset: NTL VIIRS Black Marble"
+}
+
+foreach v of varlist ghs_* {
+    label var `v' "Dataset: Urbanization, GHS-SMOD"
+}
+
+foreach v of varlist pop* {
+    label var `v' "Dataset: Flood Exposure, Fathom v3 and WorldPop"
+}
+
+foreach v of varlist sum_pop* {
+    label var `v' "Dataset: Population, WorldPop"
+}
+
+2. In beginning of code, create a check so that the "ntl_viirs_bm_monthly" cannot be specified with "ntl_viirs_bm_annual" or "ntl_viirs_csm_annual"
+
+
 xx
 	
 * Simplify iso3 variable name
