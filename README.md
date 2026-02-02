@@ -1,8 +1,20 @@
-# query_s2s: Query Space2Stats Datasets at ADM Levels
+# space2stats-stata: Query Space2Stats Datasets at ADM Levels
 
 A Stata package to easily load, filter, and merge datasets from the World Bank's [Space2Stats](https://worldbank.github.io/DECAT_Space2Stats/readme.html) initiative at the ADM 2, 1, and 0 level. 
 
-The package relies on data from the Development Data Hub (DDH), using both the main [Space2Stats Database](https://datacatalog.worldbank.org/int/search/dataset/0066820/Space2Stats-Database) and the [Space2Stats Database of Monthly and Annual Black Marble Nighttime Lights](https://datacatalog.worldbank.org/int/search/dataset/0066940/Space2Stats-Monthly---Annual-Black-Marble-Nighttime-Lights). (The main Space2Stats database aggregates data at the h3 level to the ADM2 level, and the temporal resolution is up to annual. The Space2Stats Black Marble database is separate as the data is aggregated from the raw satellite imagery to the ADM2 level, and the database includes monthly data).
+The packages relies on data from two Space2Stat Development Data Hub (DDH) repositories:
+
+* The main [Space2Stats Database](https://datacatalog.worldbank.org/int/search/dataset/0066820/Space2Stats-Database), to query data on:
+    - Population Demographics, 2020 (WorldPop)
+    - Degree of Urbanization (GHSSMOD)
+    - Annual Nighttime Lights (World Bank, Light Every Night)
+    - Flood Exposure (Fathom v3 and WorldPop)
+
+* The [Space2Stats Database of Monthly and Annual Black Marble Nighttime Lights](https://datacatalog.worldbank.org/int/search/dataset/0066940/Space2Stats-Monthly---Annual-Black-Marble-Nighttime-Lights), to query data on:
+  - Annual Nighttime Lights (NASA, Black Marble)
+  - Monthly Nighttime Lights (NASA, Black Marble)
+
+_The main Space2Stats database aggregates data at the h3 level to the ADM2 level, and the temporal resolution is up to annual. The Space2Stats Black Marble database is separate as the data is aggregated from the raw satellite imagery to the ADM2 level, and the database includes monthly data._
 
 ## Overview
 
