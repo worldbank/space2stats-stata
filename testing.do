@@ -1,5 +1,35 @@
 * Testing
 
+* Load CSV from URL
+* Load CSV (variable names become lowercase)
+import delimited ///
+    "https://datacatalogfiles.worldbank.org/ddh-published/0038272/DR0095374/WB_Official_Boundaries_Admin2_additional_columns.csv", ///
+    clear bindquote(strict)
+
+* Create adm1cd_c as copy of adm1cd
+gen adm1cd_c = adm1cd
+
+* Fill missing adm1cd_c using adm1cd_t
+replace adm1cd_c = adm1cd_t if missing(adm1cd_c)
+
+* (Optional) list variables containing "nam" (R: str_subset("NAM"))
+ds *nam*
+* describe `r(varlist)'
+
+* Keep selected variables
+keep ///
+    adm1cd_c adm2cd_c ///
+    nam_1_gaul nam_2_gaul ///
+    nam_1_stat nam_2_stat ///
+    nam_1_srce nam_2_srce ///
+    nam_1_ntve nam_2_ntve ///
+    nam_1_wiki nam_2_wiki ///
+    p_name_1 p_name_2
+
+
+STOP
+
+
 import delimited ///
     "https://datacatalogfiles.worldbank.org/ddh-published/0066940/DR0095685/ntl_adm2_annual.csv", ///
     clear bindquote(strict)

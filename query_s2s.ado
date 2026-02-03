@@ -4,11 +4,17 @@
 
 program define query_s2s
     version 14.0
-    syntax, datasets(string) [iso3(string) date_start(string) date_end(string) adm_level(integer 2)]
+    syntax, datasets(string) [iso3(string) date_start(string) date_end(string) adm_level(integer 2) add_admin_names(integer 0)]
     
     * Validate adm_level
     if !inlist(`adm_level', 0, 1, 2) {
         di as error "adm_level must be 0, 1, or 2"
+        error 198
+    }
+    
+    * Validate add_admin_names
+    if !inlist(`add_admin_names', 0, 1) {
+        di as error "add_admin_names must be 0 or 1"
         error 198
     }
     
@@ -61,11 +67,16 @@ program define query_s2s
         if `need_adm1_mapping' == 1 {
             di as text "Loading ADM1 mapping for aggregation..."
             tempfile adm1_mapping
+            * Load CSV from URL
             qui import delimited ///
-                "https://datacatalogfiles.worldbank.org/ddh-published/0066940/DR0095685/ntl_adm2_annual.csv", ///
+                "https://datacatalogfiles.worldbank.org/ddh-published/0038272/DR0095374/WB_Official_Boundaries_Admin2_additional_columns.csv", ///
                 clear bindquote(strict)
-            qui keep adm2cd_c adm1cd_c
-            qui duplicates drop adm2cd_c adm1cd_c, force
+            * Create adm1cd_c as copy of adm1cd
+            qui gen adm1cd_c = adm1cd
+            * Fill missing adm1cd_c using adm1cd_t
+            qui replace adm1cd_c = adm1cd_t if missing(adm1cd_c)
+            * Keep only selected variables
+            qui keep adm1cd_c adm2cd_c
             qui save `adm1_mapping'
             local have_adm1_mapping = 1
         }
@@ -656,6 +667,74 @@ program define query_s2s
     * Load the final merged dataset into memory
     if `have_master' == 1 {
         qui use `master_data', clear
+    }
+    
+    * Add administrative names if requested
+    if `add_admin_names' == 1 & `adm_level' < 2 {
+        di as text "Loading administrative names..."
+        tempfile admin_names
+        preserve
+        qui import delimited ///
+            "https://datacatalogfiles.worldbank.org/ddh-published/0038272/DR0095374/WB_Official_Boundaries_Admin2_additional_columns.csv", ///
+            clear bindquote(strict)
+        * Create adm1cd_c as copy of adm1cd
+        qui gen adm1cd_c = adm1cd
+        * Fill missing adm1cd_c using adm1cd_t
+        qui replace adm1cd_c = adm1cd_t if missing(adm1cd_c)
+        * Keep selected variables
+        qui keep ///
+            adm1cd_c adm2cd_c ///
+            nam_1_gaul nam_2_gaul ///
+            nam_1_stat nam_2_stat ///
+            nam_1_srce nam_2_srce ///
+            nam_1_ntve nam_2_ntve ///
+            nam_1_wiki nam_2_wiki ///
+            p_name_1 p_name_2
+        qui save `admin_names'
+        restore
+        
+        * Merge based on admin level
+        if `adm_level' == 2 {
+            qui merge m:1 adm2cd_c using `admin_names', keep(master match) nogen
+        }
+        else if `adm_level' == 1 {
+            * For ADM1, need to collapse to unique adm1cd_c
+            preserve
+            qui use `admin_names', clear
+            * Keep only ADM1 variables and make unique by adm1cd_c
+            qui keep adm1cd_c nam_1_gaul nam_1_stat nam_1_srce nam_1_ntve nam_1_wiki p_name_1
+            qui duplicates drop adm1cd_c, force
+            qui save `admin_names', replace
+            restore
+            
+            qui merge m:1 adm1cd_c using `admin_names', keep(master match) nogen
+        }
+    }
+    else if `add_admin_names' == 1 & `adm_level' == 2 {
+        di as text "Loading administrative names..."
+        tempfile admin_names
+        preserve
+        qui import delimited ///
+            "https://datacatalogfiles.worldbank.org/ddh-published/0038272/DR0095374/WB_Official_Boundaries_Admin2_additional_columns.csv", ///
+            clear bindquote(strict)
+        * Create adm1cd_c as copy of adm1cd
+        qui gen adm1cd_c = adm1cd
+        * Fill missing adm1cd_c using adm1cd_t
+        qui replace adm1cd_c = adm1cd_t if missing(adm1cd_c)
+        * Keep selected variables
+        qui keep ///
+            adm1cd_c adm2cd_c ///
+            nam_1_gaul nam_2_gaul ///
+            nam_1_stat nam_2_stat ///
+            nam_1_srce nam_2_srce ///
+            nam_1_ntve nam_2_ntve ///
+            nam_1_wiki nam_2_wiki ///
+            p_name_1 p_name_2
+        qui save `admin_names'
+        restore
+        
+        * Merge for ADM2 level
+        qui merge m:1 adm2cd_c using `admin_names', keep(master match) nogen
     }
     
     * Display summary

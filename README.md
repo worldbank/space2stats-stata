@@ -32,7 +32,15 @@ ssc install NEED TO UPDATE THIS
 ## Syntax
 
 ```stata
-query_s2s, datasets(string) [iso3(string) date_start(string) date_end(string) adm_level(integer 2)]
+query_s2s, ///
+    datasets(string) ///
+    [
+        iso3(string) ///
+        date_start(string) ///
+        date_end(string) ///
+        adm_level(integer 2)
+        add_admin_names(integer 0)
+    ]
 ```
 
 ## Parameters
@@ -68,6 +76,10 @@ query_s2s, datasets(string) [iso3(string) date_start(string) date_end(string) ad
   - `1` - First administrative division (ADM1, e.g., states/provinces)
   - `2` - Second administrative division (ADM2, e.g., counties/districts) **[default]**
 
+- **`add_admin_names(integer)`**: Add administrative level 1 and 2 names; names come from the [World Bank Official Boundaries Admin 2 - Additional Attributes](https://datacatalog.worldbank.org/int/search/dataset/0038272/World-Bank-Official-Boundaries) dataset
+  - `0` - False **[default]**
+  - `1` - True
+  
 ## Important Notes
 
 ### Dataset Compatibility
