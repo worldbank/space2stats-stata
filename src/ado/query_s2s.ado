@@ -1,9 +1,11 @@
-*! query_s2s v2.0
-*! Query Space2Stats datasets from World Bank Data Catalog
-*! Syntax: query_s2s, [iso3(string)] datasets(string) [date_start(string)] [date_end(string)] [adm_level(integer 2)] [add_admin_names(integer 0)]
+*! version 0.0 20260203 - Robert Marty - rmarty@worldbank.org
 
-program define query_s2s
-    version 14.0
+cap program drop   query_s2s
+    program define query_s2s
+
+qui {
+
+    version 0.0
     syntax, datasets(string) [iso3(string) date_start(string) date_end(string) adm_level(integer 2) add_admin_names(integer 0)]
     
     * Validate adm_level
@@ -812,4 +814,5 @@ program define query_s2s
         }
     }
     
+}
 end

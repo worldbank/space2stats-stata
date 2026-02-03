@@ -1,5 +1,7 @@
 # space2stats-stata: Query Space2Stats Datasets at ADM 0-2 Levels
 
+__THIS PACKAGE IS CURRENTLY UNDER DEVELOPMENT__
+
 A Stata package to easily load, filter, and merge datasets from the World Bank's [Space2Stats](https://worldbank.github.io/DECAT_Space2Stats/readme.html) initiative at the ADM 2, 1, and 0 level. The packages queries data from two Space2Stat Development Data Hub (DDH) repositories:
 
 * The main [Space2Stats Database](https://datacatalog.worldbank.org/int/search/dataset/0066820/Space2Stats-Database), to query data on:
