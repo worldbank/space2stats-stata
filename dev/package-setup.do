@@ -34,3 +34,12 @@ if `run_ad_publish' == 1{
 	ad_publish, adfolder("`myfolder'")
 }
 
+
+
+net install space2stats-stata, from("https://raw.githubusercontent.com/worldbank/space2stats-stata/main/src") replace
+net install space2stats, from("https://raw.githubusercontent.com/worldbank/space2stats-stata/main/src") replace
+
+
+
+
+

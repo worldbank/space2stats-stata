@@ -14,7 +14,7 @@ A Stata package to easily load, filter, and merge datasets from the World Bank's
   - Annual Nighttime Lights (NASA, Black Marble)
   - Monthly Nighttime Lights (NASA, Black Marble)
 
-_The main Space2Stats database aggregates data at the h3 level to the ADM2 level, and the temporal resolution is up to annual. The Space2Stats Black Marble database is separate as the data is aggregated from the raw satellite imagery to the ADM2 level, and the database includes monthly data._
+_ __Note:__ The main Space2Stats database aggregates data at the h3 level to the ADM2 level, and the temporal resolution is up to annual. The Space2Stats Black Marble database is separate as the data is aggregated from the raw satellite imagery to the ADM2 level, and the database includes monthly data._
 
 ## Overview
 
