@@ -2,8 +2,8 @@
 
 * https://github.com/lsms-worldbank/adodown
 
-local run_ad_setup   1
-local run_ad_command 1
+local run_ad_setup   0
+local run_ad_command 0
 local run_ad_publish 1
 
 * point a local to the folder where the package will be created
