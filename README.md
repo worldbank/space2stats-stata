@@ -28,7 +28,7 @@ _The main Space2Stats database aggregates data at the h3 level to the ADM2 level
 ## Installation
 
 ```stata
-ssc install NEED TO UPDATE THIS
+net install space2stats-stata, from("https://raw.githubusercontent.com/worldbank/space2stats-stata/main/src") replace
 ```
 
 ## Syntax

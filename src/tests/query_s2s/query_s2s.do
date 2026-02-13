@@ -33,6 +33,6 @@
     * Run tests
 
     * Test basic case of the command query_s2s
-    query_s2s, datasets(population_2020)
+    query_s2s
 
     // Add more tests here...
