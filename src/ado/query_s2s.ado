@@ -3,7 +3,7 @@
 *! Syntax: query_s2s, [iso3(string)] datasets(string) [date_start(string)] [date_end(string)] [adm_level(integer 2)] [add_admin_names(integer 0)]
 
 program define query_s2s
-    version 0.0
+    version 14.0
     syntax, datasets(string) [iso3(string) date_start(string) date_end(string) adm_level(integer 2) add_admin_names(integer 0)]
     
     * Validate adm_level
