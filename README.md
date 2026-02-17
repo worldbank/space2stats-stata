@@ -1,20 +1,20 @@
 # space2stats-stata: Query Space2Stats Datasets at ADM 0-2 Levels
 
-__THIS PACKAGE IS CURRENTLY UNDER DEVELOPMENT__
+__THIS PACKAGE IS CURRENTLY UNDER DEVELOPMENT.__
 
 A Stata package to easily load, filter, and merge datasets from the World Bank's [Space2Stats](https://worldbank.github.io/DECAT_Space2Stats/readme.html) initiative at the ADM 2, 1, and 0 level. The packages queries data from two Space2Stat Development Data Hub (DDH) repositories:
 
 * The main [Space2Stats Database](https://datacatalog.worldbank.org/int/search/dataset/0066820/Space2Stats-Database), to query data on:
-    - Population Demographics, 2020 (WorldPop)
-    - Degree of Urbanization (GHSSMOD)
-    - Annual Nighttime Lights (World Bank, Light Every Night)
-    - Flood Exposure (Fathom v3 and WorldPop)
+  - Population Demographics, 2020 ([WorldPop](https://www.worldpop.org/))
+  - Degree of Urbanization ([GHS-SMOD](https://human-settlement.emergency.copernicus.eu/ghs_smod2023.php))
+  - Annual Nighttime Lights (2012 to present) ([World Bank, Light Every Night](https://worldbank.github.io/OpenNightLights/wb-light-every-night-readme.html))
+  - Flood Exposure ([Fathom v3](https://www.fathom.global/newsroom/fathom-launches-global-flood-map/) and [WorldPop](https://www.worldpop.org/))
 
 * The [Space2Stats Database of Monthly and Annual Black Marble Nighttime Lights](https://datacatalog.worldbank.org/int/search/dataset/0066940/Space2Stats-Monthly---Annual-Black-Marble-Nighttime-Lights), to query data on:
-  - Annual Nighttime Lights (NASA, Black Marble)
-  - Monthly Nighttime Lights (NASA, Black Marble)
+  - Annual Nighttime Lights (2012 to present) ([NASA, Black Marble](https://blackmarble.gsfc.nasa.gov/))
+  - Monthly Nighttime Lights (2012 to present) ([NASA, Black Marble](https://blackmarble.gsfc.nasa.gov/))
 
-_ __Note:__ The main Space2Stats database aggregates data at the h3 level to the ADM2 level, and the temporal resolution is up to annual. The Space2Stats Black Marble database is separate as the data is aggregated from the raw satellite imagery to the ADM2 level, and the database includes monthly data._
+*__Note:__ The main Space2Stats database aggregates data at the H3 level to the ADM2 level, and the temporal resolution is annual. The Space2Stats Black Marble database is separate, as the data are aggregated from raw satellite imagery to the ADM2 level and include monthly data.*
 
 ## Overview
 
@@ -50,9 +50,9 @@ query_s2s, ///
 ### Required Parameters
 
 - **`datasets(string)`**: One or more datasets to load (space-separated)
-  - `ntl_viirs_bm_annual` - Night-time lights (VIIRS, [NASA Black Marble](https://blackmarble.gsfc.nasa.gov/)), annual
-  - `ntl_viirs_bm_monthly` - Night-time lights (VIIRS, [NASA Black Marble](https://blackmarble.gsfc.nasa.gov/)), monthly
-  - `ntl_viirs_len_annual` - Night-time lights (VIIRS, [World Bank Light Every Night](https://worldbank.github.io/OpenNightLights/wb-light-every-night-readme.html)), annual
+  - `ntl_viirs_bm_annual` - Nighttime lights (VIIRS, [NASA Black Marble](https://blackmarble.gsfc.nasa.gov/)), annual (2012 to present)
+  - `ntl_viirs_bm_monthly` - Nighttime lights (VIIRS, [NASA Black Marble](https://blackmarble.gsfc.nasa.gov/)), monthly (2012 to present)
+  - `ntl_viirs_len_annual` - Nighttime lights (VIIRS, [World Bank Light Every Night](https://worldbank.github.io/OpenNightLights/wb-light-every-night-readme.html)), annual (2012 to present)
   - `flood_exposure` - Flood exposure data ([Fathom v3](https://www.fathom.global/newsroom/fathom-launches-global-flood-map/) and [WorldPop](https://www.worldpop.org/))
   - `population_2020` - Population data for 2020 ([WorldPop](https://www.worldpop.org/))
   - `urbanization` - Urbanization data ([GHS-SMOD](https://human-settlement.emergency.copernicus.eu/ghs_smod2023.php))
