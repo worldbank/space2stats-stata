@@ -186,13 +186,9 @@ When `adm_level` is set to 1 or 0, the function aggregates data using:
 **Issue**: Variables not found after collapse
 - **Solution**: Check that the requested datasets contain the expected variables
 
-## Version
-
-Current version: 0.1.0
-
 ## Authors
 
-Developed for use with World Bank Space2Stats datasets.
+Stata package developed by Robert Marty (rmarty@worldbank.org) and Sahiti Sarva (ssarva@worldbank.org)
 
 ## License
 
