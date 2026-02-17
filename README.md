@@ -188,7 +188,7 @@ When `adm_level` is set to 1 or 0, the function aggregates data using:
 
 ## Authors
 
-Stata package developed by Robert Marty (rmarty@worldbank.org) and Sahiti Sarva (ssarva@worldbank.org)
+Stata package developed by Robert Marty (rmarty@worldbank.org) and Sahiti Sarva (ssarva@worldbank.org).
 
 ## License
 
