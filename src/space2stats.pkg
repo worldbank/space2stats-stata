@@ -1,0 +1,33 @@
+* This package file is generated in the adodown workflow.
+* Do not edit manually - instead, use the command ad_update in the adodown package
+*** version
+v 0.0
+*** title
+d 'SPACE2STATS': 
+*** description
+d This package queries satellite data
+d
+*** stata
+d Requires: Stata version 0.0
+d
+*** author
+d Author: Robert Marty
+*** contact
+d Contact: rmarty@worldbank.org
+*** url
+d URL: https://github.com/worldbank/space2stats-stata/adodown
+d
+*** date
+d Distribution-Date: 20260203
+*** adofiles
+f ado/query_s2s.ado
+f ado/space2stats.ado
+
+*** helpfiles
+f sthlp/query_s2s.sthlp
+f sthlp/space2stats.sthlp
+
+*** ancillaryfiles
+
+*** end
+e
