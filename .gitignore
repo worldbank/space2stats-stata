@@ -2,10 +2,9 @@
 #
 # Based on DIME .gitignore template. Follow the instructions in the URL
 # below to set up this template in your own repository
-# https://github.com/worldbank/dime-github-trainings/tree/master/GitHub-resources/DIME-GitHub-Templates
+# https://github.com/worldbank/dime-github-trainings/tree/main/GitHub-resources/DIME-GitHub-Templates
 #
-# Note that if you are using GitKraken, you need to use version 5.x or more
-# recent for this template to work properly
+# This is version 2.0
 #
 ########################################################################
 
@@ -22,10 +21,16 @@
 !.gitignore
 !.gitattributes
 
+# Git placeholder file (to commit empty folders)
+!/**/*.gitkeep
+
 # Keep markdown files used for documentation on GitHub
 !README.md
 !CONTRIBUTING.md
 !LICENSE*
+
+* Unignore reproot files - see https://dime-worldbank.github.io/repkit/articles/reproot-files.html
+!reproot*.yaml
 
 #######################
 # For performance reasons, if a folder is already ignored, then
@@ -43,13 +48,16 @@
 # Stata
 !/**/*.do
 !/**/*.ado
-!/**/*.toc
-!/**/*.pkg
+!/**/*.sthlp
+!/**/*.smcl
 
 # R
 !/**/*.R
 !/**/*.Rmd
 !/**/*.Rproj
+!/**/*.qmd
+# Still ignore user file for R projects
+.Rproj.user
 
 # LaTeX
 !/**/*.tex
@@ -58,6 +66,9 @@
 # Python
 !/**/*.py
 !/**/*.ipynb
+!/**/requirements.txt
+!/**/Pipfile
+!/**/Pipfile.lock
 # Still ignore .ipynb files in checkpoint folders
 .ipynb_checkpoints
 
@@ -70,6 +81,17 @@
 # Julia
 !/**/*.jl
 
+#Files to create custom layout and functionality
+# in dashboards, markdown notebooks, bookdown etc.
+!/**/*.css
+!/**/*.js
+
+#Bash scripts
+!/**/*.sh
+
+# .yml and .yaml files
+# These files sometimes have credentials, so only unignore these lines by removing
+# the "#" below after you checked your .yml/.yaml files for sensitive content
 !/**/*.yml
 !/**/*.yaml
 
@@ -94,3 +116,15 @@ password.*
 passwords.*
 password/
 passwords/
+token.*
+tokens.*
+token/
+tokens/
+
+#######################
+# Other
+
+!/**/*.png
+!/**/*.txt
+!/**/*.toc
+!/**/*.pkg
